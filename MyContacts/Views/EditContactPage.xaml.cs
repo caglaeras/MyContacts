@@ -31,7 +31,7 @@ namespace MyContacts.Views
             }
             else
             {
-                DisplayAlert("Hata", "Kiþi bulunamadý", "Tamam");
+                DisplayAlert("Error", "Contact Not Found", "OK");
             }
         }
 
