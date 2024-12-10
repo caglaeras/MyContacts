@@ -1,53 +1,54 @@
+﻿using Microsoft.Maui.ApplicationModel.Communication;
 using MyContacts.Model;
 
-namespace MyContacts.Views;
-
-[QueryProperty(nameof(Id), "id")]
-public partial class EditContactPage : ContentPage
+namespace MyContacts.Views
 {
-    ContactsRepository repository = new ContactsRepository();
-
-    public string Id { get; set; }
-    private ContactInfo contact;
-
-    public EditContactPage() => InitializeComponent();
-
-    protected override void OnAppearing()
+    [QueryProperty(nameof(id), "id")]
+    public partial class EditContactPage : ContentPage
     {
-        base.OnAppearing();
+        ContactsRepository contactRepository = new ContactsRepository();
 
-        if (!string.IsNullOrEmpty(Id))
+        private ContactInfo contactInfo;
+
+        public string id { get; set; }
+
+        public EditContactPage()
         {
-            contact = repository.GetContact(Int32.Parse(Id));
-            if (contact != null)
+            InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            contactInfo = contactRepository.GetContact(Int32.Parse(id));
+
+            if (contactInfo != null)
             {
-                NameEntry.Text = contact.NameSurname;
-                PhoneEntry.Text = contact.PhoneNumber;
-                EmailEntry.Text = contact.Email;
+                NameEntry.Text = contactInfo.NameSurname;
+                PhoneEntry.Text = contactInfo.PhoneNumber;
+                EmailEntry.Text = contactInfo.Email;
+            }
+            else
+            {
+                DisplayAlert("Hata", "Kiþi bulunamadý", "Tamam");
             }
         }
-    }
 
-    private void SaveButton_Clicked(object sender, EventArgs e)
-    {
-        if (contact != null)
+        private async void SaveButton_Clicked(object sender, EventArgs e)
         {
-            // Update contact details
-            contact.NameSurname = NameEntry.Text;
-            contact.PhoneNumber = PhoneEntry.Text;
-            contact.Email = EmailEntry.Text;
+            contactInfo.NameSurname = NameEntry.Text;
+            contactInfo.PhoneNumber = PhoneEntry.Text;
+            contactInfo.Email = EmailEntry.Text;
 
-            // Save updated contact
-            repository.UpdateContact(contact);
+            await contactRepository.Update(contactInfo);
 
-            // Navigate back
-            Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync("..");
         }
-    }
 
-    private void CancelButton_Clicked(object sender, EventArgs e)
-    {
-        // Navigate back without saving changes
-        Shell.Current.GoToAsync("..");
+        private async void CancelButton_Clicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//ContactsPage");
+        }
     }
 }
