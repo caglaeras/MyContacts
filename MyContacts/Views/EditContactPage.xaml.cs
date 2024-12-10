@@ -10,10 +10,7 @@ public partial class EditContactPage : ContentPage
     public string Id { get; set; }
     private ContactInfo contact;
 
-    public EditContactPage()
-    {
-        InitializeComponent();
-    }
+    public EditContactPage() => InitializeComponent();
 
     protected override void OnAppearing()
     {
