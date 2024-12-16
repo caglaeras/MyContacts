@@ -31,9 +31,20 @@ namespace MyContacts.Views
             }
             else
             {
-                DisplayAlert("Error", "Contact Not Found", "OK");
+                DisplayAlert("Error", "The Contact Not Found", "OK");
             }
         }
+
+        private async void DeleteButton_Clicked(object sender, EventArgs e)
+        {
+            bool answer = await DisplayAlert("Are you Sure?", "Are you sure to delete", "Yes", "No");
+            if (answer)
+            {
+                await contactRepository.DeleteContact(contactInfo);
+                await Shell.Current.GoToAsync("..");
+            }
+        }
+
 
         private async void SaveButton_Clicked(object sender, EventArgs e)
         {
@@ -46,7 +57,7 @@ namespace MyContacts.Views
             await Shell.Current.GoToAsync("..");
         }
 
-        private async void CancelButton_Clicked(object sender, EventArgs e)
+        private async void BackButton_Clicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//ContactsPage");
         }

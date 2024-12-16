@@ -6,7 +6,7 @@
 		<Entry x:Name="NameEntry" Placeholder="Name" />
 		<Entry x:Name="PhoneEntry" Placeholder="Phone Number" Keyboard="Telephone" />
 		<Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" />
-		<Button Text="Save" Clicked="SaveButton_Clicked" />
-		<Button Text="Cancel" Clicked="CancelButton_Clicked" />
+		<Button Text="Save" BackgroundColor="Green" Clicked="SaveButton_Clicked" />
+		<Button Text="Delete" BackgroundColor="red" Clicked="DeleteButton_Clicked" />
 	</StackLayout>
 </ContentPage>
